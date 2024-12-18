@@ -1,0 +1,6 @@
+@VSLinksBackend_HostAddress = http://localhost:5239
+
+GET {{VSLinksBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
