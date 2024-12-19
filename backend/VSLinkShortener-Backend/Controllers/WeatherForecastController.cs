@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace VSLinksBackend.Controllers
+namespace VSLinkShortener_Backend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
