@@ -2,6 +2,9 @@ using MongoDB.Driver;
 using VSLinkShortener_Backend.Config;
 using VSLinkShortener_Backend.Repositories;
 using VSLinkShortener_Backend.Services;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace VSLinkShortener_Backend
 {
@@ -12,19 +15,18 @@ namespace VSLinkShortener_Backend
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDbSettings"));
+            builder.Services.AddSingleton<IUrlRepository, UrlRepository>();
+            builder.Services.AddSingleton<UrlService>();
 
             builder.Services.AddControllers();
+
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
-
-            builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDbSettings"));
-            
-            builder.Services.AddSingleton<IMongoClient>(sp =>
-                new MongoClient(builder.Configuration.GetValue<string>("MongoDbSettings:ConnectionString")));
-            
-            builder.Services.AddScoped<IUrlRepository, UrlRepository>();
-            
-            builder.Services.AddScoped<UrlService>();
+   
 
 
             var app = builder.Build();
@@ -32,7 +34,8 @@ namespace VSLinkShortener_Backend
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.MapOpenApi();
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
             app.UseHttpsRedirection();
