@@ -1,5 +1,17 @@
 # Project Log
 
+## 2024/Dec/19
+- **Current progress:** 
+Installed all necessary NuGetPackages.
+Created all the necessary folders
+
+
+
+- **Next steps:** 
+Based on the scope of the project, and with the first draft of the classes done, I decided to start by working on the backend.
+- **Blockers:**
+None.
+
 ## 2024/Dec/18
 - **Current progress:** 
 Created the GitHub directory.

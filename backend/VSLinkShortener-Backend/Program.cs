@@ -1,5 +1,12 @@
+using MongoDB.Driver;
+using VSLinkShortener_Backend.Config;
+using VSLinkShortener_Backend.Repositories;
+using VSLinkShortener_Backend.Services;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
-namespace VSLinksBackend
+namespace VSLinkShortener_Backend
 {
     public class Program
     {
@@ -8,11 +15,19 @@ namespace VSLinksBackend
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDbSettings"));
+            builder.Services.AddSingleton<IUrlRepository, UrlRepository>();
+            builder.Services.AddSingleton<UrlService>();
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+            builder.Services.AddOpenApi();
+   
+
 
             var app = builder.Build();
 

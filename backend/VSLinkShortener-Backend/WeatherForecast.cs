@@ -1,4 +1,4 @@
-namespace VSLinksBackend
+namespace VSLinkShortener_Backend
 {
     public class WeatherForecast
     {
