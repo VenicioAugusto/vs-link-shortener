@@ -19,6 +19,16 @@ namespace VSLinkShortener_Backend
             builder.Services.AddSingleton<IUrlRepository, UrlRepository>();
             builder.Services.AddSingleton<UrlService>();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowReactApp", policy =>
+                {
+                    policy.WithOrigins("http://localhost:5173") // React app origin
+                          .AllowAnyMethod() // Allow all HTTP methods (GET, POST, etc.)
+                          .AllowAnyHeader(); // Allow all headers
+                });
+            });
+
             builder.Services.AddControllers();
 
             builder.Services.AddEndpointsApiExplorer();
@@ -37,6 +47,8 @@ namespace VSLinkShortener_Backend
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseCors("AllowReactApp");
 
             app.UseHttpsRedirection();
 
